@@ -2,6 +2,7 @@ using PGENFiles
 using Test, BGEN
 using GeneticVariantBase
 const data = PGENFiles.datadir("bgen_example.16bits.pgen")
+# try using this if nothing meaningful convert VCF to pgen using PLINK-2 packages 
 @testset "PGENFiles.jl" begin
 
 @testset "Header" begin

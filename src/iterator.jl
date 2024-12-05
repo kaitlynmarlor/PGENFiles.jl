@@ -2,7 +2,7 @@
     PgenVariantIterator(p::Pgen)
 Variant iterator that iterates from the beginning of the Pgen file
 """
-struct PgenVariantIterator <: VariantIterator
+struct PgenVariantIterator <: GeneticVariantBase.VariantIterator
     p::Pgen
     v::Variant
 end
@@ -60,15 +60,15 @@ end
     v
 end
 
-@inline function chrom(p::Pgen, v::PgenVariant)
+@inline function GeneticVariantBase.chrom(p::Pgen, v::PgenVariant)
     return string(p.pvar_df[v.index, Symbol("#CHROM")])
 end
 
-@inline function pos(p::Pgen, v::PgenVariant)
+@inline function GeneticVariantBase.pos(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("POS")]
 end
 
-@inline function rsid(p::Pgen, v::PgenVariant)
+@inline function GeneticVariantBase.rsid(p::Pgen, v::PgenVariant)
     return string(p.pvar_df[v.index, Symbol("ID")])
 end
 
@@ -76,11 +76,11 @@ function alleles(p::Pgen, v::PgenVariant)
     return [p.pvar_df[v.index, Symbol("REF")], p.pvar_df[v.index, Symbol("ALT")]]
 end
 
-function alt_allele(p::Pgen, v::PgenVariant)
+function GeneticVariantBase.alt_allele(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("ALT")]
 end
 
-function ref_allele(p::Pgen, v::PgenVariant)
+function GeneticVariantBase.ref_allele(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("REF")]
 end
 
