@@ -5,6 +5,15 @@ const data = PGENFiles.datadir("bgen_example.16bits.pgen")
 # try using this if nothing meaningful convert VCF to pgen using PLINK-2 packages 
 @testset "PGENFiles.jl" begin
 
+@testset "n_samples n_variants" begin
+    p = PGENFiles.Pgen(data)
+    h = p.header
+    @test PGENFiles.n_samples(p) == 0x01f4
+    @test PGENFiles.n_variants(p) == 0xc7
+    @test PGENFiles.n_samples(p) == h.n_samples
+    @test PGENFiles.n_variants(p) == h.n_variants
+end
+
 @testset "Header" begin
     p = PGENFiles.Pgen(data)
     h = p.header
@@ -72,6 +81,7 @@ end
     rm("dummy", force=true)
 end
 
+# one test in dosages is failing 
 @testset "dosage" begin
     # NOTE: First alleles in the BGEN file are encoded as alternate allele in the transformation.
     # Some record types are not covered by this test, LD-compressions in particular.

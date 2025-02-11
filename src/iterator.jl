@@ -2,7 +2,7 @@
     PgenVariantIterator(p::Pgen)
 Variant iterator that iterates from the beginning of the Pgen file
 """
-struct PgenVariantIterator <: GeneticVariantBase.VariantIterator
+struct PgenVariantIterator <: VariantIterator
     p::Pgen
     v::Variant
 end
@@ -60,15 +60,15 @@ end
     v
 end
 
-@inline function GeneticVariantBase.chrom(p::Pgen, v::PgenVariant)
+@inline function chrom(p::Pgen, v::PgenVariant)
     return string(p.pvar_df[v.index, Symbol("#CHROM")])
 end
 
-@inline function GeneticVariantBase.pos(p::Pgen, v::PgenVariant)
+@inline function pos(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("POS")]
 end
 
-@inline function GeneticVariantBase.rsid(p::Pgen, v::PgenVariant)
+@inline function rsid(p::Pgen, v::PgenVariant)
     return string(p.pvar_df[v.index, Symbol("ID")])
 end
 
@@ -76,11 +76,11 @@ function alleles(p::Pgen, v::PgenVariant)
     return [p.pvar_df[v.index, Symbol("REF")], p.pvar_df[v.index, Symbol("ALT")]]
 end
 
-function GeneticVariantBase.alt_allele(p::Pgen, v::PgenVariant)
+function alt_allele(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("ALT")]
 end
 
-function GeneticVariantBase.ref_allele(p::Pgen, v::PgenVariant)
+function ref_allele(p::Pgen, v::PgenVariant)
     return p.pvar_df[v.index, Symbol("REF")]
 end
 
@@ -88,3 +88,11 @@ function load_values!(arr::AbstractArray, p::Pgen, v::PgenVariant; genobuf = Vec
     alt_allele_dosage!(arr, genobuf, p, v; genoldbuf=genoldbuf)
     arr
 end
+
+function n_samples(p::Pgen)
+    return p.header.n_samples
+end 
+
+function n_variants(p::Pgen)
+    return p.header.n_variants
+end 

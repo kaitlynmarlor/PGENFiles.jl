@@ -6,6 +6,7 @@ import Base: unsafe_load
 import GeneticVariantBase: GeneticData, Variant, VariantIterator, iterator
 import GeneticVariantBase: chrom, pos, rsid, alleles, alt_allele, ref_allele
 import GeneticVariantBase: maf, hwepval, infoscore, alt_dosages!
+import GeneticVariantBase: n_samples, n_variants
 export Pgen, iterator, n_samples, n_variants, get_genotypes, get_genotypes!
 export alt_allele_dosage, alt_allele_dosage!, ref_allele_dosage, ref_allele_dosage!
 BitIntegers.@define_integers 24
