@@ -1,6 +1,6 @@
 """
-    PgenVariantIterator(p::Pgen)
-Variant iterator that iterates from the beginning of the Pgen file
+    PgenVariantIterator(p::Pgen, v::Variant)
+Variant iterator that iterates from the variant v.
 """
 struct PgenVariantIterator <: VariantIterator
     p::Pgen
@@ -36,6 +36,17 @@ end
 
 @inline function Base.size(vi::PgenVariantIterator)
     (vi.p.header.n_variants, )
+end
+
+# Overload collect for PgenVariantIterator
+function Base.collect(vi::PgenVariantIterator)
+    result = Vector{Variant}(undef, length(vi))
+    i = 1
+    for v in vi
+        result[i] = PgenVariant(v.index, v.offset, v.record_type, v.length)
+        i += 1
+    end
+    return result
 end
 
 """
