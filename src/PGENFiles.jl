@@ -1,6 +1,6 @@
 module PGENFiles
 using BitIntegers
-using CSV, DataFrames
+using CSV, DataFrames, Statistics
 import Mmap: mmap
 import Base: unsafe_load
 import GeneticVariantBase: GeneticData, Variant, VariantIterator, iterator
